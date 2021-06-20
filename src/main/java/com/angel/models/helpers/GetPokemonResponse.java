@@ -1,7 +1,5 @@
 package com.angel.models.helpers;
 
-import com.angel.models.PokemonDetails;
-
 import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)

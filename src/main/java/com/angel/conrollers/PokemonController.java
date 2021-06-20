@@ -1,19 +1,30 @@
 package com.angel.conrollers;
 
-import com.angel.models.PokemonDetails;
+import com.angel.models.Log;
+import com.angel.models.helpers.PokemonDetails;
 import com.angel.models.helpers.GetPokemonRequest;
 import com.angel.models.helpers.GetPokemonResponse;
+import com.angel.repositories.LogRepository;
 import com.angel.services.APIService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 @Endpoint
 public class PokemonController {
+
+    @Autowired
+    private HttpServletRequest httpServletRequest;
+
+    @Autowired
+    private LogRepository logRepository;
 
     private static final String NAMESPACE_URI = "http://www.baeldung.com/springsoap/gen";
 
@@ -32,9 +43,24 @@ public class PokemonController {
 
         GetPokemonResponse pokemonResponse = new GetPokemonResponse();
 
-       // System.out.println("Final ->" + pokemonDetails.getHeldItem().getItems().get(0).getItemDetails().get(0).getVersion());
-
         pokemonResponse.setPokemonDetails(pokemonDetails);
+
+        String ipAddress = httpServletRequest.getHeader("X-FORWARDED-FOR");
+        String method = null;
+        if (ipAddress == null) {
+            ipAddress = httpServletRequest.getRemoteAddr();
+            method = httpServletRequest.getMethod();
+        }
+
+        Log log = new Log();
+
+        log.setSourceIp(ipAddress);
+        log.setDateCreation(LocalDateTime.now());
+        log.setMethod(method);
+        log.setPokemonHasSearch(pokemonDetails.getPokemon_name());
+
+
+        logRepository.save(log);
 
         return pokemonResponse;
     }

@@ -1,4 +1,4 @@
-package com.angel.models;
+package com.angel.models.helpers;
 
 public class ItemDetails {
     String version;

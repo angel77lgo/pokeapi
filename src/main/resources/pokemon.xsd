@@ -17,8 +17,6 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
-
-
    <xs:complexType name="pokemonDetails">
        <xs:sequence>
            <xs:element name="pokemon_name" type="xs:string"/>

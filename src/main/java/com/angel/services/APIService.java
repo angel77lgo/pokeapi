@@ -1,6 +1,6 @@
 package com.angel.services;
 
-import com.angel.models.*;
+import com.angel.models.helpers.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.web.client.RestTemplate;
