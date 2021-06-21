@@ -40,21 +40,14 @@ public class APIService {
         JSONObject pokemonJson = new JSONObject(output);;
         PokemonDetails pokemonDetails = new PokemonDetails();
 
-
-        //System.out.println(pokemonJson);
-
         String pokemonName = pokemonJson.getString("name");
 
         JSONArray abilities = pokemonJson.getJSONArray("abilities");
-
-        System.out.println(abilities);
 
         ArrayList<Ability> abilityArrayList = new ArrayList<>();
 
         for (Object ability: abilities) {
             if ( ability instanceof JSONObject) {
-
-              //  System.out.println(((JSONObject) ability).getJSONObject("ability").getNumber("slot"));
 
                 String abilityName = ((JSONObject) ability).getJSONObject("ability").getString("name");
                 Boolean isHidden = ((JSONObject) ability).getBoolean("is_hidden");

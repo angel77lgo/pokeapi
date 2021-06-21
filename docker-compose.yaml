@@ -1,0 +1,22 @@
+version: "3"
+services:
+  app:
+    container_name: poke-soapservice
+    image: poke-soapservice
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    restart: always
+    depends_on:
+      - dbpostgres
+
+  dbpostgres:
+    container_name: postgres-spring
+    image: postgres:12.7-alpine
+    ports:
+      - "5431:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=pokeapi
